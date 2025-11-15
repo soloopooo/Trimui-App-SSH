@@ -24,7 +24,7 @@ A graphical SSH server application for the TrimUI Smart Pro handheld gaming devi
 
 1. Clone the repository with submodules:
    ```bash
-   git clone --recursive https://github.com/Maxwell-SS/trimui-smart-pro-build-system.git
+   git clone --recursive git@github.com:dimitrovs/trimui-smart-pro-build-system.git
    ```
    
    Or if you've already cloned the repository, initialize the submodule:
