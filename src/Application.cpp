@@ -76,7 +76,7 @@ void Application::run() {
         }
 
         dropbear_manager_->pumpLogs();
-        renderer_->render(ip_addrs_, log_lines_);
+        renderer_->render(ip_addrs_, users_, log_lines_);
         SDL_Delay(Display::FRAME_DELAY_MS);
     }
 }
@@ -148,6 +148,14 @@ void Application::refreshIPAddrs() {
         pushLogLine(std::string("getifaddrs failed: ") + strerror(errno));
     }
     ip_addrs_ = std::move(addrs);
+    
+    // Also get system users (only on first refresh to avoid repeated reads)
+    if (users_.empty()) {
+        users_ = network_manager_->getSystemUsers();
+        if (!users_.empty()) {
+            pushLogLine("System users found: " + std::to_string(users_.size()));
+        }
+    }
 }
 
 void Application::pushLogLine(const std::string& line) {

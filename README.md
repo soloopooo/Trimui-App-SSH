@@ -60,6 +60,10 @@ Once the application is running and shows your device's IP address:
 ssh root@<device-ip-address>
 ```
 
+**Default credentials:**
+- Username: `root`
+- Password: `tina`
+
 Default Dropbear configuration typically uses port 22.
 
 ### Exiting the Application

@@ -5,6 +5,8 @@
 #include <netdb.h>
 #include <algorithm>
 #include <cstring>
+#include <fstream>
+#include <sstream>
 
 std::vector<std::string> NetworkManager::getIPv4Addresses() const {
     std::vector<std::string> addrs;
@@ -19,6 +21,42 @@ std::vector<std::string> NetworkManager::getIPv4Addresses() const {
     
     sortIPAddressesByPriority(addrs);
     return addrs;
+}
+
+std::vector<std::string> NetworkManager::getSystemUsers() const {
+    std::vector<std::string> users;
+    std::ifstream passwd("/etc/passwd");
+    
+    if (!passwd.is_open()) {
+        return users;
+    }
+    
+    std::string line;
+    while (std::getline(passwd, line)) {
+        if (line.empty() || line[0] == '#') continue;
+        
+        // Parse passwd format: username:x:uid:gid:comment:home:shell
+        std::istringstream iss(line);
+        std::string username, x, uid_str;
+        
+        if (std::getline(iss, username, ':') &&
+            std::getline(iss, x, ':') &&
+            std::getline(iss, uid_str, ':')) {
+            
+            try {
+                int uid = std::stoi(uid_str);
+                // Show users with UID >= 0 (include root and system users that might be valid)
+                // Typically real users have UID >= 1000, but on embedded systems this varies
+                if (uid >= 0 && uid < 65534) {  // Exclude 'nobody' user (65534)
+                    users.push_back(username + " (UID: " + uid_str + ")");
+                }
+            } catch (...) {
+                // Skip invalid entries
+            }
+        }
+    }
+    
+    return users;
 }
 
 void NetworkManager::collectIPv4Addresses(struct ifaddrs* ifaddr, std::vector<std::string>& addrs) const {

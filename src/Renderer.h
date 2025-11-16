@@ -11,12 +11,14 @@ public:
     Renderer(SDL_Renderer* renderer, TTF_Font* font);
     
     void render(const std::vector<std::string>& ipAddrs,
+                const std::vector<std::string>& users,
                 const std::vector<std::string>& logLines);
 
 private:
     void clearScreen();
     int renderTitle(int y) const;
     int renderIPAddresses(int y, const std::vector<std::string>& ipAddrs) const;
+    int renderUsers(int y, const std::vector<std::string>& users) const;
     int renderLogs(int y, const std::vector<std::string>& logLines) const;
     void renderFooter() const;
     

@@ -22,6 +22,7 @@ struct Color {
     // Predefined colors
     static constexpr Color White() { return {255, 255, 255, 255}; }
     static constexpr Color Gray() { return {200, 200, 200, 255}; }
+    static constexpr Color Yellow() { return {255, 255, 100, 255}; }
     static constexpr Color LightGreen() { return {180, 255, 180, 255}; }
     static constexpr Color LightBlue() { return {200, 200, 255, 255}; }
     static constexpr Color DarkBackground() { return {40, 40, 60, 255}; }

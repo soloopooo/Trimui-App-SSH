@@ -24,12 +24,12 @@ private:
     bool fileExists(const std::string& path) const;
     bool isExecutable(const std::string& path) const;
     bool generateHostKey(const std::string& keyPath);
-    void executeDropbearKeygen(const std::string& keygenPath, const std::string& keyPath);
+    [[noreturn]] void executeDropbearKeygen(const std::string& keygenPath, const std::string& keyPath);
     bool waitForKeygenCompletion(pid_t pid, const std::string& keyPath);
     
     void startDropbear();
     bool createLogPipe(int pipefd[2]);
-    void executeDropbear(int pipefd[2], const std::string& db_path);
+    [[noreturn]] void executeDropbear(int pipefd[2], const std::string& db_path);
     void stopDropbearGracefully();
     
     void flushPendingLines(bool force);

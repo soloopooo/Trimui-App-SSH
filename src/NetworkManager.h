@@ -8,6 +8,7 @@ struct ifaddrs;
 class NetworkManager {
 public:
     std::vector<std::string> getIPv4Addresses() const;
+    std::vector<std::string> getSystemUsers() const;
 
 private:
     void collectIPv4Addresses(struct ifaddrs* ifaddr, std::vector<std::string>& addrs) const;

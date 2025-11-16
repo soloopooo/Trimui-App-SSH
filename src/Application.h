@@ -45,6 +45,7 @@ private:
     // State
     bool running_ = false;
     std::vector<std::string> ip_addrs_;
+    std::vector<std::string> users_;
     std::vector<std::string> log_lines_;
     Uint32 last_ip_refresh_ms_ = 0;
 };

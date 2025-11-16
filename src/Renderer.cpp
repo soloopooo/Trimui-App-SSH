@@ -7,12 +7,14 @@ Renderer::Renderer(SDL_Renderer* renderer, TTF_Font* font)
 }
 
 void Renderer::render(const std::vector<std::string>& ipAddrs,
+                      const std::vector<std::string>& users,
                       const std::vector<std::string>& logLines) {
     clearScreen();
     
     int y = 30;
     y = renderTitle(y);
     y = renderIPAddresses(y, ipAddrs);
+    y = renderUsers(y, users);
     y = renderLogs(y, logLines);
     renderFooter();
 
@@ -44,6 +46,20 @@ int Renderer::renderIPAddresses(int y, const std::vector<std::string>& ipAddrs) 
         }
     }
     return y + 8;
+}
+
+int Renderer::renderUsers(int y, const std::vector<std::string>& users) const {
+    if (!users.empty()) {
+        renderText(renderer_, font_, "System Users:", 50, y, Color::LightBlue(), false);
+        y += 24;
+        
+        for (const auto& user : users) {
+            renderText(renderer_, font_, "  " + user, 50, y, Color::Yellow(), false);
+            y += 20;
+        }
+        y += 8;
+    }
+    return y;
 }
 
 int Renderer::renderLogs(int y, const std::vector<std::string>& logLines) const {
